@@ -1,6 +1,6 @@
 import pandas as pd 
 
-df = pd.read_csv('icd10cm_codes_2023.txt', 
+df = pd.read_csv('/Users/hantswilliams/Downloads/icd10OrderFiles 2/icd10cm_codes_2023.txt', 
                  sep='\t', 
                  names=['code'],
                  header=None)
@@ -18,6 +18,9 @@ df['description'] = df[df.columns[2:]].apply(lambda x: ' '.join(x.dropna().astyp
 
 ## drop all columns except code and description
 df = df[['code', 'description']]
+
+## create new column based on code that just keeps the first 1 characters
+df['code_section'] = df['code'].str[:1]
 
 ## from description, remove all white space that is not a space
 df['description'] = df['description'].str.replace('\s+', ' ', regex=True)
